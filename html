@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School Club Event Manager</title>
+    <style>
+        body { font-family: Georgia, serif; margin: 40px; }
+        .container { max-width: 800px; margin: auto; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; }
+        input, textarea, select { width: 100%; padding: 8px; }
+        button { padding: 10px 20px; background-color:rgb(198, 231, 208); color: white; border: none; cursor: pointer; }
+        button:hover { background-color:rgb(128, 128, 128); }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color:rgb(128, 128, 128); }
+        .message { color: red; margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>School Club Event Manager</h2>
+        <?php if echo "<div class='message'></div>
+        
+    
+        <h3>Add New Event</h3>
+        <form method="POST">
+            <div class="form-group">
+                <label>Title:</label><input type="text" name="title" required>
+            </div>
+            <div class="form-group">
+                <label>Description:</label><textarea name="description" required></textarea>
+            </div>
+            <div class="form-group">
+                <label>Location:</label><input type="text" name="location" required>
+            </div>
+            <div class="form-group">
+                <label>Event Date:</label><input type="date" name="event_date" required>
+            </div>
+            <div class="form-group">
+                <label>Status:</label>
+                <select name="status" required>
+                    <option value="Upcoming">Upcoming</option>
+                    <option value="Completed">Completed</option>
+                </select>
+            </div>
+            <button type="submit" name="add">Add Event</button>
+        </form>
+
+        <h3>Event List</h3>
+        <table>
+            <tr>
+                <th>ID</th><th>Title</th><th>Description</th><th>Location</th><th>Date</th><th>Status</th><th>Actions</th>
+            </tr>
+           
+        </table>
+    </div>
+
+    
+     <?php foreach ($events as $event): ?>
+            <tr>
+                <td><?php echo $event['event_id']; ?></td>
+                <td><?php echo $event['title']; ?></td>
+                <td><?php echo $event['description']; ?></td>
+                <td><?php echo $event['location']; ?></td>
+                <td><?php echo $event['event_date']; ?></td>
+                <td><?php echo $event['status']; ?></td>
+                <td>
+                    <form method="POST" style="display:inline;">
+                        <input type="hidden" name="event_id" value="<?php echo $event['event_id']; ?>">
+                        <input type="hidden" name="title" value="<?php echo $event['title']; ?>">
+                        <input type="hidden" name="description" value="<?php echo $event['description']; ?>">
+                        <input type="hidden" name="location" value="<?php echo $event['location']; ?>">
+                        <input type="hidden" name="event_date" value="<?php echo $event['event_date']; ?>">
+                        <input type="hidden" name="status" value="<?php echo $event['status']; ?>">
+                        <button type="submit" name="update" onclick="return confirm('Update this event?')">Edit</button>
+                    </form>
+                    <form method="POST" style="display:inline;">
+                        <input type="hidden" name="event_id" value="<?php echo $event['event_id']; ?>">
+                        <button type="submit" name="delete" onclick="return confirm('Delete this event?')">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            <?php endforeach; ?>
